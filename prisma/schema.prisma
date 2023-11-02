@@ -18,7 +18,17 @@ model Post {
   published  Boolean   @default(false)
   userEmail     String
   user       User      @relation(fields:[userEmail],references:[email])
+  comments   Comment[]
 
+}
+
+model Comment {
+  id       String  @id @default(cuid())
+  message  String
+  userId   String
+  postId   String
+  user     User     @relation(fields:[userId], references:[id])
+  post     Post     @relation(fields:[postId], references:[id])
 }
 
 
@@ -58,6 +68,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  comments      Comment[]
 }
 
 model VerificationToken {
